@@ -8,11 +8,12 @@
     "build": "tsc --project tsconfig.build.json",
     "dev": "tsc --project tsconfig.build.json --watch",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/",
+    "lint": "eslint .",
     "test": "vitest run",
     "clean": "rm -rf dist .turbo"
   },
   "devDependencies": {
+    "eslint": "^9.39.3",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
   }

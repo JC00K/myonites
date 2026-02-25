@@ -1,3 +1,5 @@
+import type { Exercise } from "./exercise";
+
 /**
  * Represents a single workout session (one of 6 daily slots).
  * Maps to the `sessions` table in Supabase.
@@ -22,17 +24,17 @@ export interface Session {
 
 export type SlotNumber = 1 | 2 | 3 | 4 | 5 | 6;
 
-export type SessionType = 'physical' | 'mental';
+export type SessionType = "physical" | "mental";
 
 export type SessionStatus =
-  | 'scheduled'
-  | 'notified'
-  | 'confirmed'
-  | 'in_progress'
-  | 'completed'
-  | 'skipped'
-  | 'deferred'
-  | 'missed';
+  | "scheduled"
+  | "notified"
+  | "confirmed"
+  | "in_progress"
+  | "completed"
+  | "skipped"
+  | "deferred"
+  | "missed";
 
 /**
  * A single exercise within a session, with its order and results.
@@ -60,7 +62,7 @@ export interface ComposedWorkout {
 }
 
 export interface ComposedExercise {
-  exercise: import('./exercise').Exercise;
+  exercise: Exercise;
   orderIndex: number;
   videoUrl: string;
   captionUrl: string | null;

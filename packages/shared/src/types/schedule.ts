@@ -1,3 +1,6 @@
+import type { ExercisePosition } from "./exercise";
+import type { SlotNumber, SessionType } from "./session";
+
 /**
  * User's profile including work window and notification preferences.
  * Maps to the `user_profiles` table.
@@ -17,7 +20,7 @@ export interface UserProfile {
   updatedAt: string;
 }
 
-export type NotificationChannel = 'email' | 'sms';
+export type NotificationChannel = "email" | "sms";
 
 /**
  * A block of time within the work window where the user is available.
@@ -48,9 +51,9 @@ export interface DailySchedule {
  * 6th slot is always type: 'mental'.
  */
 export interface ProposedSlot {
-  slotNumber: import('./session').SlotNumber;
+  slotNumber: SlotNumber;
   time: string; // ISO 8601 timestamp
-  sessionType: import('./session').SessionType;
+  sessionType: SessionType;
 }
 
 /**
@@ -58,7 +61,7 @@ export interface ProposedSlot {
  * Accounts for seated vs standing, range of motion limitations, etc.
  */
 export interface WorkspaceCalibration {
-  position: import('./exercise').ExercisePosition;
+  position: ExercisePosition;
   rangeOfMotionFactor: number; // 0.0-1.0, 1.0 = full range
   calibratedAt: string;
 }

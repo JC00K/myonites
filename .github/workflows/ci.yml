@@ -28,5 +28,8 @@ jobs:
       - name: Build shared
         run: pnpm --filter @myonites/shared build
 
+      - name: Lint
+        run: pnpm lint
+
       - name: Typecheck
         run: pnpm --filter @myonites/shared typecheck && pnpm --filter @myonites/app typecheck
