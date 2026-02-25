@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Myonites",
+    "slug": "myonites",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "myonites",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.myonites.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Myonites uses your camera to analyze exercise form during graded workouts. Frames are processed on-device and never stored or transmitted."
+      }
+    },
+    "android": {
+      "package": "com.myonites.app",
+      "permissions": ["CAMERA"]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
