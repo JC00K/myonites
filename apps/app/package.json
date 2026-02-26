@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.28.6",
+    "@mediapipe/tasks-vision": "^0.10.32",
     "@myonites/shared": "workspace:*",
     "@supabase/supabase-js": "^2.47.0",
     "expo": "~52.0.0",

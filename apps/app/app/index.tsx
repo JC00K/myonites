@@ -5,12 +5,15 @@ import { LoginScreen } from "../src/screens/auth/LoginScreen";
 import { SignUpScreen } from "../src/screens/auth/SignUpScreen";
 import { ResetPasswordScreen } from "../src/screens/auth/ResetPasswordScreen";
 import { HomeScreen } from "../src/screens/HomeScreen";
+import { PosePrototypeScreen } from "../src/screens/pose/PosePrototypeScreen";
 
 type AuthView = "login" | "signup" | "reset";
+type AppView = "home" | "pose-prototype";
 
 export default function Index() {
   const { session, isLoading, initialize } = useAuthStore();
   const [authView, setAuthView] = useState<AuthView>("login");
+  const [appView, setAppView] = useState<AppView>("home");
 
   useEffect(() => {
     const unsubscribe = initialize();
@@ -26,7 +29,14 @@ export default function Index() {
   }
 
   if (session) {
-    return <HomeScreen />;
+    if (appView === "pose-prototype") {
+      return <PosePrototypeScreen onBack={() => setAppView("home")} />;
+    }
+    return (
+      <HomeScreen
+        onNavigateToPosePrototype={() => setAppView("pose-prototype")}
+      />
+    );
   }
 
   switch (authView) {
