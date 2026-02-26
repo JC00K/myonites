@@ -2,23 +2,13 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "lib": [
-      "DOM",
-      "ES2022"
-    ],
+    "lib": ["DOM", "ES2022"],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@myonites/shared": [
-        "../../packages/shared/src"
-      ]
+      "@/*": ["./src/*"],
+      "@myonites/shared": ["../../packages/shared/src"]
     },
-    "types": [
-      "react-native",
-      "expo-router/types"
-    ]
+    "types": ["react-native", "expo-router/types", "node"]
   },
   "include": [
     "src/**/*.ts",
@@ -30,9 +20,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    ".expo"
-  ]
+  "exclude": ["node_modules", "dist", ".expo"]
 }
