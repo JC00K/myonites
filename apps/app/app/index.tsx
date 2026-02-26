@@ -1,63 +1,56 @@
-import { StyleSheet, Text, View, Platform } from 'react-native';
-import { MOOD_LABELS } from '@myonites/shared';
+import { useEffect, useState } from "react";
+import { ActivityIndicator, View, StyleSheet } from "react-native";
+import { useAuthStore } from "../src/store/authStore";
+import { LoginScreen } from "../src/screens/auth/LoginScreen";
+import { SignUpScreen } from "../src/screens/auth/SignUpScreen";
+import { ResetPasswordScreen } from "../src/screens/auth/ResetPasswordScreen";
+import { HomeScreen } from "../src/screens/HomeScreen";
 
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Myonites</Text>
-      <Text style={styles.subtitle}>
-        Running on {Platform.OS} ({Platform.Version})
-      </Text>
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Shared Package Working</Text>
-        <Text style={styles.cardBody}>
-          Mood labels: {MOOD_LABELS.join(', ')}
-        </Text>
+type AuthView = "login" | "signup" | "reset";
+
+export default function Index() {
+  const { session, isLoading, initialize } = useAuthStore();
+  const [authView, setAuthView] = useState<AuthView>("login");
+
+  useEffect(() => {
+    const unsubscribe = initialize();
+    return unsubscribe;
+  }, [initialize]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color="#1a1a2e" />
       </View>
-    </View>
-  );
+    );
+  }
+
+  if (session) {
+    return <HomeScreen />;
+  }
+
+  switch (authView) {
+    case "signup":
+      return <SignUpScreen onNavigateToLogin={() => setAuthView("login")} />;
+    case "reset":
+      return (
+        <ResetPasswordScreen onNavigateToLogin={() => setAuthView("login")} />
+      );
+    default:
+      return (
+        <LoginScreen
+          onNavigateToSignUp={() => setAuthView("signup")}
+          onNavigateToReset={() => setAuthView("reset")}
+        />
+      );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  loading: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-    backgroundColor: '#f8f9fa',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '700',
-    marginBottom: 8,
-    color: '#1a1a2e',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#6c757d',
-    marginBottom: 32,
-  },
-  card: {
-    backgroundColor: '#ffffff',
-    borderRadius: 12,
-    padding: 20,
-    width: '100%',
-    maxWidth: 400,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 8,
-    color: '#16a34a',
-  },
-  cardBody: {
-    fontSize: 14,
-    color: '#495057',
-    lineHeight: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f8f9fa",
   },
 });
