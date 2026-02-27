@@ -8,7 +8,11 @@ import {
 import { MOOD_LABELS } from "@myonites/shared";
 import { useAuthStore } from "../store/authStore";
 
-export function HomeScreen() {
+interface HomeScreenProps {
+  onNavigateToPosePrototype: () => void;
+}
+
+export function HomeScreen({ onNavigateToPosePrototype }: HomeScreenProps) {
   const { session, signOut } = useAuthStore();
 
   return (
@@ -27,6 +31,17 @@ export function HomeScreen() {
           Mood labels: {MOOD_LABELS.join(", ")}
         </Text>
       </View>
+
+      {Platform.OS === "web" && (
+        <TouchableOpacity
+          style={styles.prototypeButton}
+          onPress={onNavigateToPosePrototype}>
+          <Text style={styles.prototypeButtonText}>
+            Pose Estimation Prototype
+          </Text>
+        </TouchableOpacity>
+      )}
+
       <TouchableOpacity style={styles.signOut} onPress={signOut}>
         <Text style={styles.signOutText}>Sign Out</Text>
       </TouchableOpacity>
@@ -75,6 +90,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#495057",
     lineHeight: 20,
+  },
+  prototypeButton: {
+    backgroundColor: "#4f46e5",
+    borderRadius: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    marginTop: 24,
+    width: "100%",
+    maxWidth: 400,
+    alignItems: "center",
+  },
+  prototypeButtonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "600",
   },
   signOut: {
     marginTop: 24,
