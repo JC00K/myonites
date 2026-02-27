@@ -33,3 +33,6 @@ jobs:
 
       - name: Typecheck
         run: pnpm --filter @myonites/shared typecheck && pnpm --filter @myonites/app typecheck
+
+      - name: Test
+        run: pnpm test
