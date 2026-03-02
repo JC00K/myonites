@@ -107,6 +107,10 @@ importers:
         version: 2.1.9(@edge-runtime/vm@3.2.0)(@types/node@22.19.11)(jsdom@28.1.0)(lightningcss@1.27.0)(terser@5.46.0)
 
   packages/shared:
+    dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.47.0
+        version: 2.97.0
     devDependencies:
       eslint:
         specifier: ^9.39.3
