@@ -11,9 +11,13 @@ import { useTheme } from "../hooks/useTheme";
 
 interface HomeScreenProps {
   onNavigateToPosePrototype: () => void;
+  onNavigateToSettings: () => void;
 }
 
-export function HomeScreen({ onNavigateToPosePrototype }: HomeScreenProps) {
+export function HomeScreen({
+  onNavigateToPosePrototype,
+  onNavigateToSettings,
+}: HomeScreenProps) {
   const { session, signOut } = useAuthStore();
   const { colors } = useTheme();
 
@@ -62,6 +66,17 @@ export function HomeScreen({ onNavigateToPosePrototype }: HomeScreenProps) {
           </Text>
         </TouchableOpacity>
       )}
+
+      <TouchableOpacity
+        style={[
+          styles.settingsButton,
+          { backgroundColor: colors.surface, borderColor: colors.border },
+        ]}
+        onPress={onNavigateToSettings}>
+        <Text style={[styles.settingsButtonText, { color: colors.text }]}>
+          Settings
+        </Text>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.signOut} onPress={signOut}>
         <Text style={[styles.signOutText, { color: colors.danger }]}>
@@ -117,6 +132,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   prototypeButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  settingsButton: {
+    borderRadius: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    marginTop: 12,
+    width: "100%",
+    maxWidth: 400,
+    alignItems: "center",
+    borderWidth: 1,
+  },
+  settingsButtonText: {
     fontSize: 16,
     fontWeight: "600",
   },
