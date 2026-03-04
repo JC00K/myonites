@@ -7,7 +7,7 @@ export type {
   CommonMistake,
   FormCriteria,
   AngleRange,
-} from './types/exercise';
+} from "./types/exercise";
 
 export type {
   Session,
@@ -19,45 +19,38 @@ export type {
   ComposedExercise,
   MeditationConfig,
   BreathingPattern,
-} from './types/session';
+} from "./types/session";
 
-export type { MoodEntry, MoodLabel, MoodValue } from './types/mood';
-export { MOOD_MAP, MOOD_LABELS } from './types/mood';
+export type { MoodEntry, MoodLabel, MoodValue } from "./types/mood";
+export { MOOD_MAP, MOOD_LABELS } from "./types/mood";
 
 export type {
   UserProfile,
+  ThemePreference,
   NotificationChannel,
   AvailabilityBlock,
   DailySchedule,
   ProposedSlot,
   WorkspaceCalibration,
-} from './types/schedule';
+} from "./types/schedule";
 
 export type {
   Feedback,
   FeedbackCategory,
   FeedbackStatus,
-} from './types/feedback';
+} from "./types/feedback";
 
-export type {
-  TimedEvent,
-  EventType,
-  ExerciseEventFile,
-} from './types/events';
+export type { TimedEvent, EventType, ExerciseEventFile } from "./types/events";
 
-export type {
-  Landmark,
-  PoseLandmarks,
-  LandmarkName,
-} from './types/pose';
-export { LANDMARK_INDEX } from './types/pose';
+export type { Landmark, PoseLandmarks, LandmarkName } from "./types/pose";
+export { LANDMARK_INDEX } from "./types/pose";
 
 export type {
   FormScore,
   AngleDeviation,
   DeviationSeverity,
   FormFeedback,
-} from './types/form';
+} from "./types/form";
 
 // ─── Repository Interfaces ──────────────────────────────────────────────────
 export type {
@@ -66,21 +59,30 @@ export type {
   AuthSession,
   AuthError,
   Unsubscribe,
-} from './repositories/interfaces/AuthService';
+} from "./repositories/interfaces/AuthService";
 
-export type { WorkoutRepository, ExerciseResult } from './repositories/interfaces/WorkoutRepository';
-export type { SessionRepository } from './repositories/interfaces/SessionRepository';
-export type { ExerciseRepository } from './repositories/interfaces/ExerciseRepository';
-export type { MoodRepository } from './repositories/interfaces/MoodRepository';
-export type { FeedbackRepository } from './repositories/interfaces/FeedbackRepository';
-export type { ScheduleRepository } from './repositories/interfaces/ScheduleRepository';
+export type {
+  WorkoutRepository,
+  ExerciseResult,
+} from "./repositories/interfaces/WorkoutRepository";
+export type { SessionRepository } from "./repositories/interfaces/SessionRepository";
+export type { ExerciseRepository } from "./repositories/interfaces/ExerciseRepository";
+export type { MoodRepository } from "./repositories/interfaces/MoodRepository";
+export type { FeedbackRepository } from "./repositories/interfaces/FeedbackRepository";
+export type { ScheduleRepository } from "./repositories/interfaces/ScheduleRepository";
 export type {
   RotationRepository,
   RotationEntry,
-} from './repositories/interfaces/RotationRepository';
+} from "./repositories/interfaces/RotationRepository";
 
 // ─── AI Interfaces ──────────────────────────────────────────────────────────
-export type {
-  PoseEstimator,
-  VideoFrame,
-} from './ai/pose/PoseEstimator';
+export type { PoseEstimator, VideoFrame } from "./ai/pose/PoseEstimator";
+
+// ─── Supabase Implementations ───────────────────────────────────────────────
+export { createExerciseRepository } from "./repositories/supabase/exercise.repository";
+export { createSessionRepository } from "./repositories/supabase/session.repository";
+export { createWorkoutRepository } from "./repositories/supabase/workout.repository";
+export { createMoodRepository } from "./repositories/supabase/mood.repository";
+export { createFeedbackRepository } from "./repositories/supabase/feedback.repository";
+export { createScheduleRepository } from "./repositories/supabase/schedule.repository";
+export { createRotationRepository } from "./repositories/supabase/rotation.repository";
