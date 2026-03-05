@@ -23,7 +23,7 @@ export function HomeScreen({
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Myonites</Text>
+      <Text style={[styles.title, { color: colors.text }]}>Musclaris</Text>
       <Text style={[styles.subtitle, { color: colors.textTertiary }]}>
         Running on {Platform.OS} ({Platform.Version})
       </Text>

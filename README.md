@@ -1,11 +1,11 @@
-# Myonites
+# Musclaris
 
 Cross-platform workout scheduling app — iOS, Android, Web — from a single codebase.
 
 ## Architecture
 
 ```
-myonites/
+musclaris/
 ├── apps/app/          → Expo (React Native) — iOS, Android, Web
 ├── packages/shared/   → TypeScript types, interfaces, business logic (zero platform deps)
 ├── server/            → Vercel serverless API routes
@@ -74,26 +74,33 @@ pnpm --filter @myonites/shared build
 ### Step 4 — Run the app
 
 **Web (fastest to verify):**
+
 ```bash
 pnpm --filter @myonites/app dev:web
 ```
+
 Opens in your browser. You should see "Myonites" with the platform shown as "web" and the mood labels from the shared package.
 
 **iOS (requires Expo Go on your iPhone):**
+
 ```bash
 pnpm --filter @myonites/app dev:ios
 ```
+
 Scan the QR code with your phone camera. Expo Go opens the app.
 
 **Android (requires Expo Go on your Android device):**
+
 ```bash
 pnpm --filter @myonites/app dev:android
 ```
 
 **All platforms at once:**
+
 ```bash
 pnpm dev
 ```
+
 Turborepo runs `dev` across all workspaces in parallel.
 
 ### Step 5 — Verify the setup
@@ -120,15 +127,15 @@ Instead of separate Git repos for the app, server, and shared code, everything l
 
 ### What does Turborepo do?
 
-`turbo.json` defines a task pipeline. When you run `pnpm build`, Turborepo knows to build `packages/shared` *before* `apps/app` (because the app depends on shared). It also caches build outputs — if shared hasn't changed, it skips rebuilding it.
+`turbo.json` defines a task pipeline. When you run `pnpm build`, Turborepo knows to build `packages/shared` _before_ `apps/app` (because the app depends on shared). It also caches build outputs — if shared hasn't changed, it skips rebuilding it.
 
 ### How does the app import from shared?
 
 The app's `package.json` has `"@myonites/shared": "workspace:*"`. In code:
 
 ```typescript
-import { MOOD_LABELS } from '@myonites/shared';
-import type { Session, Exercise } from '@myonites/shared';
+import { MOOD_LABELS } from "@myonites/shared";
+import type { Session, Exercise } from "@myonites/shared";
 ```
 
 ### What is the repository pattern?
@@ -143,17 +150,17 @@ All database access goes through interfaces (in `packages/shared/src/repositorie
 
 ## Commands
 
-| Command | What it does |
-|---|---|
-| `pnpm install` | Install all dependencies across workspaces |
-| `pnpm dev` | Start all workspaces in dev mode |
-| `pnpm build` | Build everything (shared → app → server) |
-| `pnpm typecheck` | Type-check all workspaces |
-| `pnpm lint` | Lint all workspaces |
-| `pnpm test` | Run all tests |
-| `pnpm --filter @myonites/app dev:web` | Run just the web app |
-| `pnpm --filter @myonites/shared build` | Build just the shared package |
-| `pnpm clean` | Remove all build artifacts and node_modules |
+| Command                                | What it does                                |
+| -------------------------------------- | ------------------------------------------- |
+| `pnpm install`                         | Install all dependencies across workspaces  |
+| `pnpm dev`                             | Start all workspaces in dev mode            |
+| `pnpm build`                           | Build everything (shared → app → server)    |
+| `pnpm typecheck`                       | Type-check all workspaces                   |
+| `pnpm lint`                            | Lint all workspaces                         |
+| `pnpm test`                            | Run all tests                               |
+| `pnpm --filter @myonites/app dev:web`  | Run just the web app                        |
+| `pnpm --filter @myonites/shared build` | Build just the shared package               |
+| `pnpm clean`                           | Remove all build artifacts and node_modules |
 
 ---
 

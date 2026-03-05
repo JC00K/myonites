@@ -1,21 +1,21 @@
 {
   "expo": {
-    "name": "Myonites",
-    "slug": "myonites",
+    "name": "Musclaris",
+    "slug": "musclaris",
     "version": "0.1.0",
     "orientation": "portrait",
-    "scheme": "myonites",
+    "scheme": "musclaris",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.myonites.app",
+      "bundleIdentifier": "com.musclaris.app",
       "infoPlist": {
-        "NSCameraUsageDescription": "Myonites uses your camera to analyze exercise form during graded workouts. Frames are processed on-device and never stored or transmitted."
+        "NSCameraUsageDescription": "Musclaris uses your camera to analyze exercise form during graded workouts. Frames are processed on-device and never stored or transmitted."
       }
     },
     "android": {
-      "package": "com.myonites.app",
+      "package": "com.musclaris.app",
       "permissions": ["CAMERA"]
     },
     "web": {
