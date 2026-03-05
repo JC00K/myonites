@@ -36,7 +36,7 @@ export function LoginScreen({
       style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <View style={styles.inner}>
-        <Text style={[styles.title, { color: colors.text }]}>Myonites</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Musclaris</Text>
         <Text style={[styles.subtitle, { color: colors.textTertiary }]}>
           Sign in to continue
         </Text>
