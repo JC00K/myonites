@@ -3,6 +3,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "lib": ["DOM", "ES2022"],
+    "moduleSuffixes": [".web", ".native", ""],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
