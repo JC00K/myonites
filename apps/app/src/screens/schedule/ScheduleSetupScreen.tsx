@@ -6,11 +6,11 @@
  * schedule flow (from home screen).
  *
  * Collects: work days, work window, availability blocks.
- * On submit: runs the scheduling engine and navigates
- * to the confirmation screen.
+ * Availability defaults to the full shift and updates
+ * when the work window changes.
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -60,6 +60,20 @@ export function ScheduleSetupScreen({
   const [availabilityBlocks, setAvailabilityBlocks] = useState<
     AvailabilityBlock[]
   >([{ start: "09:00", end: "17:00" }]);
+  const [hasManuallyEditedBlocks, setHasManuallyEditedBlocks] = useState(false);
+
+  /* Update availability to match work window when it changes,
+     unless the user has manually edited their blocks */
+  useEffect(() => {
+    if (!hasManuallyEditedBlocks) {
+      setAvailabilityBlocks([{ start: workStart, end: workEnd }]);
+    }
+  }, [workStart, workEnd, hasManuallyEditedBlocks]);
+
+  const handleBlocksChange = (blocks: AvailabilityBlock[]) => {
+    setHasManuallyEditedBlocks(true);
+    setAvailabilityBlocks(blocks);
+  };
 
   const handleContinue = () => {
     if (workDays.length === 0) {
@@ -124,7 +138,6 @@ export function ScheduleSetupScreen({
           : "Adjust your work days, hours, and availability."}
       </Text>
 
-      {/* Work Days */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
           Work Days
@@ -132,7 +145,6 @@ export function ScheduleSetupScreen({
         <DaySelector selected={workDays} onChange={setWorkDays} />
       </View>
 
-      {/* Work Window */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
           Work Hours
@@ -148,20 +160,19 @@ export function ScheduleSetupScreen({
         />
       </View>
 
-      {/* Availability */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
           Availability
         </Text>
         <Text style={[styles.sectionHint, { color: colors.textTertiary }]}>
-          Drag the blocks to show when you're free for workouts. Add blocks
-          around meetings or breaks.
+          Your full shift is available by default. Add blocks around meetings or
+          breaks if needed.
         </Text>
         <TimelinePicker
           workStart={workStart}
           workEnd={workEnd}
           blocks={availabilityBlocks}
-          onChange={setAvailabilityBlocks}
+          onChange={handleBlocksChange}
         />
       </View>
 

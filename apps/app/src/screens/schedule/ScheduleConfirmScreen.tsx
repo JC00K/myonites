@@ -2,7 +2,7 @@
  * ScheduleConfirmScreen
  *
  * Displays the proposed workout schedule on a visual timeline.
- * Users review the slot placements and confirm or go back to adjust.
+ * Users can adjust individual slot times by tapping or dragging.
  * Shows warnings if the engine couldn't fit all 6 sessions.
  */
 
@@ -20,6 +20,7 @@ import { useTheme } from "../../hooks/useTheme";
 import { ScheduleTimeline } from "../../components/schedule/ScheduleTimeline";
 import type { ScheduleConfig } from "./ScheduleSetupScreen";
 import type { DayKey } from "../../components/schedule/DaySelector";
+import type { ProposedSlot } from "@myonites/shared";
 
 interface ScheduleConfirmScreenProps {
   config: ScheduleConfig;
@@ -46,15 +47,26 @@ export function ScheduleConfirmScreen({
 }: ScheduleConfirmScreenProps) {
   const { colors } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentConfig, setCurrentConfig] = useState(config);
 
-  const sortedDays = config.workDays
+  const sortedDays = currentConfig.workDays
     .slice()
     .sort((a, b) => DAY_ORDER.indexOf(a) - DAY_ORDER.indexOf(b));
+
+  const sampleSlots = currentConfig.proposals.get(sortedDays[0]!) ?? [];
+
+  const handleSlotsChange = (updatedSlots: ProposedSlot[]) => {
+    const newProposals = new Map(currentConfig.proposals);
+    for (const day of currentConfig.workDays) {
+      newProposals.set(day, updatedSlots);
+    }
+    setCurrentConfig({ ...currentConfig, proposals: newProposals });
+  };
 
   const handleConfirm = async () => {
     setIsSubmitting(true);
     try {
-      await onConfirm(config);
+      await onConfirm(currentConfig);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Failed to save schedule.";
@@ -63,8 +75,6 @@ export function ScheduleConfirmScreen({
       setIsSubmitting(false);
     }
   };
-
-  const sampleSlots = config.proposals.get(sortedDays[0]!) ?? [];
 
   return (
     <ScrollView
@@ -76,20 +86,21 @@ export function ScheduleConfirmScreen({
 
       <Text style={[styles.title, { color: colors.text }]}>Your Schedule</Text>
       <Text style={[styles.subtitle, { color: colors.textTertiary }]}>
-        Review your proposed workout times. {sampleSlots.length} sessions per
-        day.
+        {sampleSlots.length} sessions per day. Tap or drag times to adjust.
       </Text>
 
-      {/* Timeline preview */}
+      {/* Timeline with adjustable slots */}
       <View
         style={[
           styles.card,
           { backgroundColor: colors.surface, borderColor: colors.border },
         ]}>
         <ScheduleTimeline
-          workStart={config.workStart}
-          workEnd={config.workEnd}
+          workStart={currentConfig.workStart}
+          workEnd={currentConfig.workEnd}
           slots={sampleSlots}
+          availabilityBlocks={currentConfig.availabilityBlocks}
+          onSlotsChange={handleSlotsChange}
         />
       </View>
 
@@ -128,8 +139,8 @@ export function ScheduleConfirmScreen({
             Work Window
           </Text>
           <Text style={[styles.infoValue, { color: colors.text }]}>
-            {formatDisplayTime(config.workStart)} –{" "}
-            {formatDisplayTime(config.workEnd)}
+            {formatDisplayTime(currentConfig.workStart)} –{" "}
+            {formatDisplayTime(currentConfig.workEnd)}
           </Text>
         </View>
         <View style={styles.infoRow}>
@@ -148,7 +159,7 @@ export function ScheduleConfirmScreen({
             Availability Blocks
           </Text>
           <Text style={[styles.infoValue, { color: colors.text }]}>
-            {config.availabilityBlocks.length}
+            {currentConfig.availabilityBlocks.length}
           </Text>
         </View>
       </View>

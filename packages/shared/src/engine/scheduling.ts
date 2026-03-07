@@ -28,7 +28,7 @@ export interface SchedulingInput {
 }
 
 const TOTAL_SLOTS = 6;
-const BUFFER_MINUTES = 120;
+const BUFFER_RATIO = 0.125;
 const MIN_GAP_MINUTES = 20;
 const SESSION_DURATION_MINUTES = 7;
 const MENTAL_SLOT_BUFFER_MIN = 30;
@@ -64,7 +64,9 @@ export function getSchedulableBlocks(
   workEnd: number,
   blocks: AvailabilityBlock[],
 ): { start: number; end: number }[] {
-  const bufferEnd = workStart + BUFFER_MINUTES;
+  const shiftLength = workEnd - workStart;
+  const bufferMinutes = Math.round(shiftLength * BUFFER_RATIO);
+  const bufferEnd = workStart + bufferMinutes;
 
   return blocks
     .map((block) => {
